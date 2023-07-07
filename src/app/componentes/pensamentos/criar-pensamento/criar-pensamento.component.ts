@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Pensamento } from '../pensamento';
+import { PensamentoService } from '../pensamento.service';
 
 @Component({
   selector: 'app-criar-pensamento',
@@ -6,11 +8,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./criar-pensamento.component.css']
 })
 export class CriarPensamentoComponent {
-  pensamento = {
-    id: '1',
-    conteudo: 'Aprendendo Angular',
-    autoria: 'Dev',
+  pensamento: Pensamento = {
+    conteudo: '',
+    autoria: '',
     modelo: ''
+  }
+
+  constructor(private service: PensamentoService){
+
   }
 
   ngOnInit(): void{
@@ -18,7 +23,8 @@ export class CriarPensamentoComponent {
   }
 
   criarPensamento(){
-    alert("Comando Ok e funcional");
+    this.service.criar(this.pensamento).subscribe()
+    alert("Pensamento criado com sucesso");
   }
 
   cancelarPensamento(){

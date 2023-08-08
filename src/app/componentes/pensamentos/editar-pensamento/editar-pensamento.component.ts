@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Pensamento } from '../pensamento';
 import { PensamentoService } from '../pensamento.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-editar-pensamento',
@@ -10,36 +11,47 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EditarPensamentoComponent implements OnInit {
 
-  pensamento: Pensamento = {
-    id: 0,
-    conteudo: '',
-    autoria: '',
-    modelo: ''
+  formulario!: FormGroup
+
+  constructor(private service: PensamentoService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder){
+
   }
 
-constructor(
-  private service: PensamentoService,
-  private router: Router,
-  private route: ActivatedRoute
-){}
 
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id')
+    this.service.buscarPorId(parseInt(id!)).subscribe((pensamento) => {
+      this.formulario = this.formBuilder.group({
+        id: [pensamento.id],
+        conteudo: [pensamento.conteudo, Validators.compose([
+          Validators.required,
+          Validators.pattern(/(.|\s)*\S(.|\s)*/)
+        ])],
+        autoria: [pensamento.autoria, Validators.compose([
+          Validators.required,
+          Validators.minLength(3)
+        ])],
+        modelo: [pensamento.modelo]
+      })
+    })
+  }
 
-ngOnInit(): void {
-  const id = this.route.snapshot.paramMap.get('id')
-  this.service.buscarPorId(parseInt(id!)).subscribe((pensamento) => {
-    this.pensamento = pensamento
-  })
-}
+  editarPensamento() {
+    this.service.editar(this.formulario.value).subscribe(() => {
+      alert("Pensamento criado com sucesso"),
+      this.router.navigate(['/listarPensamento'])
+    })
+  }
 
-editarPensamento(){
-  this.service.editar(this.pensamento).subscribe(() => {
-    alert("Pensamento alterado com sucesso");
-    this.router.navigate(['/listaPensamento'])
-  })
-}
+  cancelar() {
+    this.router.navigate(['/listarPensamento'])
+  }
 
-cancelar(){
-  this.router.navigate(['/listarPensamento'])
-}
+  habilitarBotao():string{
+    if(this.formulario.valid){
+      return 'botao';
+    }
+      return 'botao__desabilitado';
+  }
 
 }

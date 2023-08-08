@@ -40,7 +40,8 @@ h2 {
   background: #154580;
   color: #ffffff;
   max-width: 270px;
-  width: 250px;
+  width: 200px;
+  height: 51px;
   padding: 1rem;
   margin: 0 auto;
   border: 2px solid #154580;
@@ -51,6 +52,20 @@ h2 {
 .botao:hover {
   border: 2px solid #84EEC1;
   color: #84EEC1;
+}
+
+.botao__desabilitado {
+  background: #7A7F87;
+  color: #FFFFFF;
+  max-width: 270px;
+  width: 200px;
+  height: 51px;
+  padding: 1rem;
+  margin: 0 auto;
+  border: 2px solid #C4C4C4;
+  border-radius: 10px;
+  margin-top: 0;
+  transition: 0.5s ease;
 }
 
 @media (min-width: 576px) {
@@ -73,6 +88,3 @@ h2 {
       width: 1140px;
   }
 }
-
-
-

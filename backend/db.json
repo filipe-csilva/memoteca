@@ -18,14 +18,14 @@
       "conteudo": "Já tentou reiniciar o roteador?",
       "autoria": "Pessoa da operadora",
       "modelo": "modelo3",
-      "favorito": false,
+      "favorito": true,
       "id": 5
     },
     {
       "conteudo": "Da vida reclama, mas sem ela não vive!",
       "autoria": "Mestre Yoda",
       "modelo": "modelo1",
-      "favorito": true,
+      "favorito": false,
       "id": 6
     },
     {
